@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Pannello di gestione del catalogo 3D.CRAFT.">
+  <meta name="theme-color" content="#07070a">
+  <title>3D.CRAFT — Gestione Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #07070a;
+      --surface: #101014;
+      --surface-2: #16161c;
+      --line: rgba(255, 255, 255, 0.1);
+      --text: #f6f5f8;
+      --muted: #a3a1ad;
+      --pink: #ff3cac;
+      --blue: #5688ff;
+      --lime: #c7ff4a;
+      --danger: #ff5d73;
+      --radius-lg: 26px;
+      --radius-md: 16px;
+      --shadow: 0 24px 80px rgba(0, 0, 0, 0.38);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 8% 0%, rgba(86, 136, 255, 0.12), transparent 30rem),
+        radial-gradient(circle at 92% 12%, rgba(255, 60, 172, 0.1), transparent 32rem),
+        var(--bg);
+      color: var(--text);
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    input,
+    textarea {
+      font: inherit;
+    }
+
+    button,
+    a,
+    input[type="file"] {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    .container {
+      width: min(1160px, calc(100% - 40px));
+      margin-inline: auto;
+    }
+
+    .topbar {
+      border-bottom: 1px solid var(--line);
+      background: rgba(7, 7, 10, 0.75);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
+
+    .topbar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 74px;
+      gap: 20px;
+    }
+
+    .logo {
+      font-size: 1rem;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+    }
+
+    .logo-dot {
+      color: var(--pink);
+    }
+
+    .back-link {
+      padding: 10px 14px;
+      border-radius: 999px;
+      color: var(--muted);
+      font-size: 0.86rem;
+      font-weight: 600;
+      transition: color 180ms ease, background-color 180ms ease, transform 180ms ease;
+    }
+
+    .back-link:hover {
+      background: rgba(255, 255, 255, 0.07);
+      color: var(--text);
+      transform: translateX(-2px);
+    }
+
+    main {
+      padding: 72px 0 110px;
+    }
+
+    .page-intro {
+      margin-bottom: 44px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: 16px;
+      color: #d7d5df;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--lime);
+      box-shadow: 0 0 18px rgba(199, 255, 74, 0.75);
+      content: "";
+    }
+
+    h1 {
+      font-size: clamp(2.7rem, 7vw, 5rem);
+      letter-spacing: -0.065em;
+      line-height: 0.98;
+    }
+
+    .intro-copy {
+      max-width: 640px;
+      margin-top: 18px;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .admin-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+      align-items: start;
+      gap: 26px;
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      background: linear-gradient(150deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.018));
+      box-shadow: var(--shadow);
+    }
+
+    .form-panel {
+      position: sticky;
+      top: 24px;
+      padding: 30px;
+    }
+
+    .panel-heading {
+      margin-bottom: 26px;
+    }
+
+    .panel-title {
+      font-size: 1.28rem;
+      letter-spacing: -0.035em;
+    }
+
+    .panel-copy {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 0.85rem;
+      line-height: 1.5;
+    }
+
+    .field {
+      margin-bottom: 20px;
+    }
+
+    label,
+    .field-label {
+      display: block;
+      margin-bottom: 9px;
+      color: #d7d5df;
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+
+    .required {
+      color: var(--pink);
+    }
+
+    input[type="text"],
+    textarea {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      outline: none;
+      background: rgba(5, 5, 8, 0.68);
+      color: var(--text);
+      transition: border-color 180ms ease, box-shadow 180ms ease, background-color 180ms ease;
+    }
+
+    input[type="text"] {
+      min-height: 50px;
+      padding: 0 15px;
+    }
+
+    textarea {
+      min-height: 122px;
+      padding: 14px 15px;
+      line-height: 1.55;
+      resize: vertical;
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+      color: #64626c;
+    }
+
+    input[type="text"]:focus,
+    textarea:focus {
+      border-color: rgba(86, 136, 255, 0.75);
+      background: rgba(10, 10, 15, 0.88);
+      box-shadow: 0 0 0 4px rgba(86, 136, 255, 0.12);
+    }
+
+    .file-drop {
+      position: relative;
+      display: grid;
+      place-items: center;
+      min-height: 138px;
+      overflow: hidden;
+      border: 1px dashed rgba(255, 255, 255, 0.2);
+      border-radius: 15px;
+      background: rgba(5, 5, 8, 0.55);
+      cursor: pointer;
+      text-align: center;
+      transition: border-color 180ms ease, background-color 180ms ease, transform 180ms ease;
+    }
+
+    .file-drop:hover,
+    .file-drop:focus-within {
+      border-color: rgba(255, 60, 172, 0.75);
+      background: rgba(255, 60, 172, 0.055);
+    }
+
+    .file-drop input {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      opacity: 0;
+    }
+
+    .file-prompt {
+      padding: 24px;
+      pointer-events: none;
+    }
+
+    .upload-icon {
+      display: grid;
+      place-items: center;
+      width: 38px;
+      height: 38px;
+      margin: 0 auto 12px;
+      border-radius: 11px;
+      background: rgba(255, 60, 172, 0.12);
+      color: var(--pink);
+      font-size: 1.15rem;
+      font-weight: 700;
+    }
+
+    .file-prompt strong {
+      display: block;
+      font-size: 0.84rem;
+    }
+
+    .file-prompt small {
+      display: block;
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 0.71rem;
+    }
+
+    .image-preview-wrap {
+      position: relative;
+      display: none;
+      width: 100%;
+      min-height: 190px;
+    }
+
+    .image-preview-wrap.visible {
+      display: block;
+    }
+
+    .image-preview {
+      width: 100%;
+      height: 190px;
+      object-fit: cover;
+    }
+
+    .preview-label {
+      position: absolute;
+      right: 10px;
+      bottom: 10px;
+      padding: 6px 9px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 999px;
+      background: rgba(7, 7, 10, 0.7);
+      color: #fff;
+      font-size: 0.66rem;
+      font-weight: 700;
+      backdrop-filter: blur(10px);
+    }
+
+    .primary-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      width: 100%;
+      min-height: 52px;
+      border: 0;
+      border-radius: 13px;
+      background: var(--pink);
+      box-shadow: 0 14px 38px rgba(255, 60, 172, 0.2);
+      color: #fff;
+      cursor: pointer;
+      font-weight: 750;
+      transition: background-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+    }
+
+    .primary-button:hover {
+      background: #ff55b8;
+      box-shadow: 0 18px 48px rgba(255, 60, 172, 0.32);
+      transform: translateY(-2px);
+    }
+
+    .primary-button:active {
+      transform: translateY(0);
+    }
+
+    .primary-button:focus-visible,
+    .delete-button:focus-visible,
+    .back-link:focus-visible,
+    .file-drop:focus-within {
+      outline: 3px solid rgba(199, 255, 74, 0.68);
+      outline-offset: 3px;
+    }
+
+    .list-panel {
+      padding: 30px;
+    }
+
+    .list-heading {
+      display: flex;
+      align-items: start;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 22px;
+    }
+
+    .catalog-count {
+      padding: 7px 10px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--muted);
+      font-size: 0.7rem;
+      white-space: nowrap;
+    }
+
+    .product-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .product-row {
+      display: grid;
+      grid-template-columns: 90px minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 16px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      background: rgba(5, 5, 8, 0.42);
+      transition: border-color 180ms ease, background-color 180ms ease;
+    }
+
+    .product-row:hover {
+      border-color: rgba(255, 255, 255, 0.18);
+      background: rgba(255, 255, 255, 0.025);
+    }
+
+    .product-thumb {
+      width: 90px;
+      aspect-ratio: 1;
+      border-radius: 12px;
+      background: var(--surface-2);
+      object-fit: cover;
+    }
+
+    .product-info {
+      min-width: 0;
+    }
+
+    .product-name {
+      overflow: hidden;
+      font-size: 0.93rem;
+      font-weight: 700;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .product-meta {
+      margin-top: 7px;
+      color: var(--lime);
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+
+    .product-description {
+      display: -webkit-box;
+      overflow: hidden;
+      margin-top: 7px;
+      color: var(--muted);
+      font-size: 0.73rem;
+      line-height: 1.45;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+    }
+
+    .delete-button {
+      min-height: 38px;
+      padding: 0 12px;
+      border: 1px solid rgba(255, 93, 115, 0.23);
+      border-radius: 10px;
+      background: rgba(255, 93, 115, 0.08);
+      color: #ff8c9c;
+      cursor: pointer;
+      font-size: 0.73rem;
+      font-weight: 700;
+      transition: border-color 180ms ease, background-color 180ms ease, color 180ms ease, transform 180ms ease;
+    }
+
+    .delete-button:hover {
+      border-color: rgba(255, 93, 115, 0.55);
+      background: var(--danger);
+      color: #fff;
+      transform: translateY(-1px);
+    }
+
+    .empty-state {
+      padding: 58px 22px;
+      border: 1px dashed rgba(255, 255, 255, 0.15);
+      border-radius: var(--radius-md);
+      color: var(--muted);
+      text-align: center;
+    }
+
+    .empty-state strong {
+      display: block;
+      margin-bottom: 7px;
+      color: var(--text);
+      font-size: 0.96rem;
+    }
+
+    .storage-note {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+      padding: 13px 14px;
+      border-radius: 12px;
+      background: rgba(86, 136, 255, 0.07);
+      color: #aebfe9;
+      font-size: 0.72rem;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 900px) {
+      .admin-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .form-panel {
+        position: static;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .container {
+        width: min(100% - 28px, 1160px);
+      }
+
+      .topbar-inner {
+        min-height: 66px;
+      }
+
+      .back-link {
+        padding: 8px;
+        font-size: 0.76rem;
+      }
+
+      main {
+        padding: 54px 0 80px;
+      }
+
+      .page-intro {
+        margin-bottom: 32px;
+      }
+
+      .form-panel,
+      .list-panel {
+        padding: 21px;
+      }
+
+      .product-row {
+        grid-template-columns: 68px minmax(0, 1fr);
+      }
+
+      .product-thumb {
+        width: 68px;
+      }
+
+      .delete-button {
+        grid-column: 1 / -1;
+        width: 100%;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="logo" href="index.html" aria-label="3D.CRAFT, home">3D<span class="logo-dot">.</span>CRAFT</a>
+      <a class="back-link" href="index.html">← Torna al Portfolio</a>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="page-intro" aria-labelledby="page-title">
+      <p class="eyebrow">Area gestione</p>
+      <h1 id="page-title">Catalogo prodotti.</h1>
+      <p class="intro-copy">Aggiungi nuove creazioni alla vetrina e gestisci quelle già pubblicate. Le modifiche vengono salvate direttamente in questo browser.</p>
+    </section>
+
+    <div class="admin-layout">
+      <section class="panel form-panel" aria-labelledby="form-title">
+        <div class="panel-heading">
+          <h2 class="panel-title" id="form-title">Aggiungi un prodotto</h2>
+          <p class="panel-copy">Tutti i campi sono obbligatori.</p>
+        </div>
+
+        <form id="product-form">
+          <div class="field">
+            <label for="product-title">Titolo Prodotto <span class="required" aria-hidden="true">*</span></label>
+            <input id="product-title" name="title" type="text" placeholder="Es. Lampada Parametrica" autocomplete="off" maxlength="80" required>
+          </div>
+
+          <div class="field">
+            <label for="product-description">Descrizione <span class="required" aria-hidden="true">*</span></label>
+            <textarea id="product-description" name="description" placeholder="Materiali, dimensioni, finitura..." maxlength="500" required></textarea>
+          </div>
+
+          <div class="field">
+            <label for="product-price">Prezzo (€) <span class="required" aria-hidden="true">*</span></label>
+            <input id="product-price" name="price" type="text" inputmode="decimal" placeholder="Es. 29,90" pattern="[0-9]+([,.][0-9]{1,2})?" title="Inserisci un prezzo valido, ad esempio 29,90" required>
+          </div>
+
+          <div class="field">
+            <span class="field-label">Foto Prodotto <span class="required" aria-hidden="true">*</span></span>
+            <label class="file-drop" for="product-image">
+              <input id="product-image" name="image" type="file" accept="image/*" required>
+              <span class="file-prompt" id="file-prompt">
+                <span class="upload-icon" aria-hidden="true">＋</span>
+                <strong>Scegli un’immagine</strong>
+                <small>JPG, PNG o WebP · massimo 2,5 MB</small>
+              </span>
+              <span class="image-preview-wrap" id="image-preview-wrap">
+                <img class="image-preview" id="image-preview" alt="Anteprima della foto selezionata">
+                <span class="preview-label">Clicca per cambiare</span>
+              </span>
+            </label>
+          </div>
+
+          <button class="primary-button" type="submit">Pubblica prodotto <span aria-hidden="true">↗</span></button>
+        </form>
+
+        <p class="storage-note"><span aria-hidden="true">ⓘ</span><span>I dati restano nel LocalStorage del browser. Per una pubblicazione definitiva e condivisa tra dispositivi servirà in futuro un database.</span></p>
+      </section>
+
+      <section class="panel list-panel" aria-labelledby="list-title">
+        <div class="list-heading">
+          <div>
+            <h2 class="panel-title" id="list-title">Prodotti online</h2>
+            <p class="panel-copy">La vetrina si aggiorna automaticamente.</p>
+          </div>
+          <span class="catalog-count" id="catalog-count" aria-live="polite"></span>
+        </div>
+        <div class="product-list" id="product-list" aria-live="polite"></div>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    const STORAGE_KEY = "3d_products";
+    const MAX_IMAGE_SIZE = 2.5 * 1024 * 1024;
+    let selectedImageBase64 = "";
+
+    function createDemoImage(type) {
+      const isVase = type === "vase";
+      const accent = isVase ? "#ff3cac" : "#5688ff";
+      const accentTwo = isVase ? "#8f45ff" : "#c7ff4a";
+      const shape = isVase
+        ? `<path d="M285 108h230l-33 79 54 330c12 72-42 135-115 135h-42c-73 0-127-63-115-135l54-330-33-79Z" fill="url(#product)"/><path d="M318 187h164M290 330h220M270 470h260" stroke="#fff" stroke-opacity=".16" stroke-width="3"/>`
+        : `<path d="M256 548V306c0-99 58-169 144-169s144 70 144 169v242" fill="none" stroke="url(#product)" stroke-width="68" stroke-linecap="round"/><rect x="198" y="482" width="118" height="172" rx="50" fill="url(#product)"/><rect x="484" y="482" width="118" height="172" rx="50" fill="url(#product)"/><path d="M400 618v72M322 690h156" stroke="#e9e9ee" stroke-width="22" stroke-linecap="round"/>`;
+
+      const svg = `
+        <svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+          <defs>
+            <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#1d1d26"/><stop offset="1" stop-color="#09090d"/></linearGradient>
+            <linearGradient id="product" x1="0" y1="0" x2="1" y2="1"><stop stop-color="${accent}"/><stop offset="1" stop-color="${accentTwo}"/></linearGradient>
+            <filter id="glow"><feGaussianBlur stdDeviation="38"/></filter>
+          </defs>
+          <rect width="800" height="600" fill="url(#bg)"/>
+          <circle cx="400" cy="326" r="215" fill="${accent}" opacity=".17" filter="url(#glow)"/>
+          <path d="M0 510 800 380v220H0Z" fill="#fff" opacity=".035"/>
+          <g transform="translate(0 -20)">${shape}</g>
+        </svg>`;
+
+      return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
+    }
+
+    const DEFAULT_PRODUCTS = [
+      {
+        id: "demo-vase",
+        title: "Vaso Geometrico",
+        description: "Vaso scultoreo in PLA riciclato, finitura opaca e linee sfaccettate. Altezza 24 cm; disponibile in colori personalizzati.",
+        price: "34,90",
+        image: createDemoImage("vase")
+      },
+      {
+        id: "demo-headphones",
+        title: "Supporto Cuffie",
+        description: "Supporto da scrivania in PETG ad alta resistenza, con base antiscivolo e passaggio cavo integrato. Altezza 27 cm.",
+        price: "49,90",
+        image: createDemoImage("headphones")
+      }
+    ];
+
+    function getProducts() {
+      const savedProducts = localStorage.getItem(STORAGE_KEY);
+
+      if (savedProducts === null) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(DEFAULT_PRODUCTS));
+        return DEFAULT_PRODUCTS;
+      }
+
+      try {
+        const parsedProducts = JSON.parse(savedProducts);
+        return Array.isArray(parsedProducts) ? parsedProducts : [];
+      } catch (error) {
+        console.error("Impossibile leggere il catalogo:", error);
+        return [];
+      }
+    }
+
+    function saveProducts(products) {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(products));
+        return true;
+      } catch (error) {
+        console.error("Impossibile salvare il catalogo:", error);
+        alert("Spazio del browser insufficiente. Prova con un’immagine più leggera o elimina un prodotto esistente.");
+        return false;
+      }
+    }
+
+    function normalizePrice(price) {
+      return String(price ?? "").replace(/€/g, "").replace(".", ",").trim();
+    }
+
+    function resetImagePreview() {
+      selectedImageBase64 = "";
+      document.getElementById("image-preview").removeAttribute("src");
+      document.getElementById("image-preview-wrap").classList.remove("visible");
+      document.getElementById("file-prompt").hidden = false;
+    }
+
+    function handleImageSelection(event) {
+      const file = event.target.files[0];
+
+      if (!file) {
+        resetImagePreview();
+        return;
+      }
+
+      if (!file.type.startsWith("image/")) {
+        alert("Seleziona un file immagine valido.");
+        event.target.value = "";
+        resetImagePreview();
+        return;
+      }
+
+      if (file.size > MAX_IMAGE_SIZE) {
+        alert("L’immagine supera 2,5 MB. Scegli un file più leggero.");
+        event.target.value = "";
+        resetImagePreview();
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = () => {
+        selectedImageBase64 = reader.result;
+        document.getElementById("image-preview").src = selectedImageBase64;
+        document.getElementById("image-preview-wrap").classList.add("visible");
+        document.getElementById("file-prompt").hidden = true;
+      };
+      reader.onerror = () => {
+        alert("Non è stato possibile leggere l’immagine. Riprova.");
+        event.target.value = "";
+        resetImagePreview();
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function createProductRow(product) {
+      const row = document.createElement("article");
+      row.className = "product-row";
+
+      const image = document.createElement("img");
+      image.className = "product-thumb";
+      image.src = product.image || createDemoImage("vase");
+      image.alt = "";
+
+      const info = document.createElement("div");
+      info.className = "product-info";
+
+      const name = document.createElement("h3");
+      name.className = "product-name";
+      name.textContent = product.title || "Prodotto senza titolo";
+
+      const meta = document.createElement("p");
+      meta.className = "product-meta";
+      meta.textContent = `€ ${normalizePrice(product.price)}`;
+
+      const description = document.createElement("p");
+      description.className = "product-description";
+      description.textContent = product.description || "";
+
+      const deleteButton = document.createElement("button");
+      deleteButton.className = "delete-button";
+      deleteButton.type = "button";
+      deleteButton.textContent = "Elimina";
+      deleteButton.setAttribute("aria-label", `Elimina ${product.title}`);
+      deleteButton.addEventListener("click", () => deleteProduct(product.id));
+
+      info.append(name, meta, description);
+      row.append(image, info, deleteButton);
+      return row;
+    }
+
+    function renderProductList() {
+      const products = getProducts();
+      const list = document.getElementById("product-list");
+      const count = document.getElementById("catalog-count");
+
+      list.replaceChildren();
+      count.textContent = `${products.length} ${products.length === 1 ? "elemento" : "elementi"}`;
+
+      if (products.length === 0) {
+        const emptyState = document.createElement("div");
+        emptyState.className = "empty-state";
+
+        const title = document.createElement("strong");
+        title.textContent = "Il catalogo è vuoto.";
+
+        const copy = document.createElement("span");
+        copy.textContent = "Aggiungi il primo prodotto usando il modulo.";
+
+        emptyState.append(title, copy);
+        list.append(emptyState);
+        return;
+      }
+
+      const fragment = document.createDocumentFragment();
+      products.forEach((product) => fragment.append(createProductRow(product)));
+      list.append(fragment);
+    }
+
+    function deleteProduct(productId) {
+      const updatedProducts = getProducts().filter((product) => String(product.id) !== String(productId));
+      if (saveProducts(updatedProducts)) renderProductList();
+    }
+
+    function addProduct(event) {
+      event.preventDefault();
+
+      if (!selectedImageBase64) {
+        alert("Seleziona una foto per il prodotto.");
+        return;
+      }
+
+      const form = event.currentTarget;
+      const newProduct = {
+        id: `${Date.now()}-${Math.random().toString(16).slice(2)}`,
+        title: form.elements.title.value.trim(),
+        description: form.elements.description.value.trim(),
+        price: normalizePrice(form.elements.price.value),
+        image: selectedImageBase64
+      };
+
+      const products = getProducts();
+      products.push(newProduct);
+
+      if (!saveProducts(products)) return;
+
+      alert("Prodotto salvato con successo!");
+      form.reset();
+      resetImagePreview();
+      renderProductList();
+    }
+
+    document.getElementById("product-image").addEventListener("change", handleImageSelection);
+    document.getElementById("product-form").addEventListener("submit", addProduct);
+    window.addEventListener("storage", (event) => {
+      if (event.key === STORAGE_KEY) renderProductList();
+    });
+    renderProductList();
+  </script>
+</body>
+</html>

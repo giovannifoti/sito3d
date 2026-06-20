@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="3D.CRAFT — oggetti stampati in 3D, progettati e realizzati in Italia.">
+  <meta name="theme-color" content="#07070a">
+  <title>3D.CRAFT — Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #07070a;
+      --surface: #101014;
+      --surface-2: #16161c;
+      --line: rgba(255, 255, 255, 0.1);
+      --text: #f6f5f8;
+      --muted: #a3a1ad;
+      --pink: #ff3cac;
+      --blue: #5688ff;
+      --lime: #c7ff4a;
+      --radius-lg: 28px;
+      --radius-md: 18px;
+      --shadow: 0 24px 80px rgba(0, 0, 0, 0.38);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      overflow-x: hidden;
+      background:
+        radial-gradient(circle at 16% 0%, rgba(255, 60, 172, 0.13), transparent 32rem),
+        radial-gradient(circle at 86% 18%, rgba(86, 136, 255, 0.13), transparent 34rem),
+        var(--bg);
+      color: var(--text);
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    a {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    .container {
+      width: min(1180px, calc(100% - 40px));
+      margin-inline: auto;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      border-bottom: 1px solid transparent;
+      background: rgba(7, 7, 10, 0.72);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+
+    .site-header::after {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--line), transparent);
+      content: "";
+    }
+
+    .navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 74px;
+      gap: 24px;
+    }
+
+    .logo {
+      font-size: 1rem;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+    }
+
+    .logo-dot {
+      color: var(--pink);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 0.88rem;
+      font-weight: 600;
+    }
+
+    .nav-link {
+      padding: 10px 14px;
+      border-radius: 999px;
+      transition: color 180ms ease, background-color 180ms ease;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      background: rgba(255, 255, 255, 0.07);
+      color: var(--text);
+    }
+
+    .hero {
+      position: relative;
+      display: grid;
+      align-content: center;
+      min-height: min(790px, calc(100vh - 74px));
+      padding: 104px 0 96px;
+      isolation: isolate;
+    }
+
+    .hero-orb {
+      position: absolute;
+      z-index: -1;
+      top: 50%;
+      right: -13%;
+      width: min(47vw, 540px);
+      aspect-ratio: 1;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 38% 62% 64% 36% / 45% 35% 65% 55%;
+      background:
+        radial-gradient(circle at 34% 30%, rgba(255, 255, 255, 0.42), transparent 7%),
+        linear-gradient(145deg, rgba(255, 60, 172, 0.8), rgba(86, 136, 255, 0.5) 50%, rgba(199, 255, 74, 0.28));
+      box-shadow: inset -40px -50px 90px rgba(0, 0, 0, 0.38), 0 0 120px rgba(86, 136, 255, 0.14);
+      filter: saturate(1.15);
+      opacity: 0.82;
+      transform: translateY(-50%) rotate(-12deg);
+      animation: float 8s ease-in-out infinite;
+    }
+
+    .hero-orb::before,
+    .hero-orb::after {
+      position: absolute;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: inherit;
+      content: "";
+      inset: 9%;
+    }
+
+    .hero-orb::after {
+      border-color: rgba(255, 255, 255, 0.1);
+      inset: 18%;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(-50%) rotate(-12deg); }
+      50% { transform: translateY(calc(-50% - 14px)) rotate(-7deg); }
+    }
+
+    .hero-content {
+      max-width: 860px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 26px;
+      color: #d7d5df;
+      font-size: 0.74rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--lime);
+      box-shadow: 0 0 18px rgba(199, 255, 74, 0.8);
+      content: "";
+    }
+
+    h1 {
+      max-width: 900px;
+      font-size: clamp(3.2rem, 8.4vw, 7.7rem);
+      font-weight: 800;
+      letter-spacing: -0.075em;
+      line-height: 0.92;
+      text-wrap: balance;
+    }
+
+    .gradient-text {
+      background: linear-gradient(100deg, var(--pink), #b888ff 45%, var(--blue));
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .hero-copy {
+      max-width: 620px;
+      margin-top: 30px;
+      color: var(--muted);
+      font-size: clamp(1rem, 1.8vw, 1.2rem);
+      line-height: 1.7;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 18px;
+      margin-top: 38px;
+    }
+
+    .primary-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 54px;
+      padding: 0 22px;
+      border: 0;
+      border-radius: 14px;
+      background: var(--pink);
+      box-shadow: 0 14px 38px rgba(255, 60, 172, 0.22);
+      color: #fff;
+      cursor: pointer;
+      font: inherit;
+      font-size: 0.92rem;
+      font-weight: 700;
+      transition: transform 180ms ease, box-shadow 180ms ease, background-color 180ms ease;
+    }
+
+    .primary-button:hover {
+      background: #ff55b8;
+      box-shadow: 0 18px 48px rgba(255, 60, 172, 0.34);
+      transform: translateY(-3px);
+    }
+
+    .primary-button:active {
+      transform: translateY(-1px);
+    }
+
+    .primary-button:focus-visible,
+    .nav-link:focus-visible {
+      outline: 3px solid rgba(199, 255, 74, 0.7);
+      outline-offset: 3px;
+    }
+
+    .hero-note {
+      color: #cbc8d2;
+      font-size: 0.83rem;
+    }
+
+    .hero-note span {
+      color: var(--lime);
+    }
+
+    .collection {
+      scroll-margin-top: 90px;
+      padding: 90px 0 120px;
+    }
+
+    .section-heading {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 36px;
+    }
+
+    .section-kicker {
+      margin-bottom: 12px;
+      color: var(--pink);
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    h2 {
+      font-size: clamp(2rem, 5vw, 4rem);
+      letter-spacing: -0.055em;
+      line-height: 1;
+    }
+
+    .product-count {
+      padding: 8px 12px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--muted);
+      font-size: 0.78rem;
+      white-space: nowrap;
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 24px;
+    }
+
+    .product-card {
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      background: linear-gradient(150deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.018));
+      box-shadow: var(--shadow);
+      transition: transform 260ms cubic-bezier(.2,.7,.2,1), border-color 260ms ease, box-shadow 260ms ease;
+    }
+
+    .product-card:hover {
+      border-color: rgba(255, 255, 255, 0.21);
+      box-shadow: 0 30px 90px rgba(0, 0, 0, 0.5);
+      transform: translateY(-7px);
+    }
+
+    .product-media {
+      position: relative;
+      aspect-ratio: 4 / 3;
+      overflow: hidden;
+      background: #15151a;
+    }
+
+    .product-media::after {
+      position: absolute;
+      background: linear-gradient(180deg, transparent 60%, rgba(7, 7, 10, 0.28));
+      content: "";
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .product-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 550ms cubic-bezier(.2,.7,.2,1);
+    }
+
+    .product-card:hover .product-image {
+      transform: scale(1.035);
+    }
+
+    .product-badge {
+      position: absolute;
+      z-index: 2;
+      top: 18px;
+      left: 18px;
+      padding: 8px 11px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 999px;
+      background: rgba(7, 7, 10, 0.58);
+      backdrop-filter: blur(12px);
+      color: #eceaf1;
+      font-size: 0.67rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .product-body {
+      display: flex;
+      flex-direction: column;
+      min-height: 280px;
+      padding: 26px;
+    }
+
+    .product-title-row {
+      display: flex;
+      align-items: start;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .product-title {
+      font-size: clamp(1.25rem, 2.3vw, 1.65rem);
+      letter-spacing: -0.035em;
+    }
+
+    .product-price {
+      color: var(--lime);
+      font-size: 1.05rem;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .product-description {
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 0.92rem;
+      line-height: 1.65;
+    }
+
+    .whatsapp-button {
+      width: 100%;
+      margin-top: auto;
+      background: var(--lime);
+      box-shadow: 0 14px 38px rgba(199, 255, 74, 0.1);
+      color: #0a0b08;
+    }
+
+    .whatsapp-button:hover {
+      background: #d5ff75;
+      box-shadow: 0 18px 48px rgba(199, 255, 74, 0.2);
+    }
+
+    .empty-state {
+      grid-column: 1 / -1;
+      padding: 74px 24px;
+      border: 1px dashed rgba(255, 255, 255, 0.15);
+      border-radius: var(--radius-lg);
+      color: var(--muted);
+      text-align: center;
+    }
+
+    .empty-state strong {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--text);
+      font-size: 1.15rem;
+    }
+
+    footer {
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.78rem;
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      min-height: 92px;
+    }
+
+    @media (max-width: 760px) {
+      .container {
+        width: min(100% - 28px, 1180px);
+      }
+
+      .navbar {
+        min-height: 66px;
+      }
+
+      .nav-links {
+        gap: 2px;
+        font-size: 0.78rem;
+      }
+
+      .nav-link {
+        padding: 9px;
+      }
+
+      .hero {
+        min-height: auto;
+        padding: 86px 0 92px;
+      }
+
+      .hero-orb {
+        top: 27%;
+        right: -29%;
+        width: 74vw;
+        opacity: 0.4;
+      }
+
+      h1 {
+        font-size: clamp(3.25rem, 17vw, 5.4rem);
+      }
+
+      .product-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .collection {
+        padding: 70px 0 90px;
+      }
+
+      .section-heading {
+        align-items: start;
+      }
+
+      .product-body {
+        min-height: 265px;
+        padding: 22px;
+      }
+
+      .footer-inner {
+        align-items: flex-start;
+        flex-direction: column;
+        justify-content: center;
+        padding: 24px 0;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="site-header">
+    <div class="container navbar">
+      <a class="logo" href="index.html" aria-label="3D.CRAFT, home">3D<span class="logo-dot">.</span>CRAFT</a>
+      <nav class="nav-links" aria-label="Navigazione principale">
+        <a class="nav-link active" href="index.html" aria-current="page">Portfolio</a>
+        <a class="nav-link" href="admin.html">Gestione Admin</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero container" aria-labelledby="hero-title">
+      <div class="hero-orb" aria-hidden="true"></div>
+      <div class="hero-content">
+        <p class="eyebrow">Design indipendente · Made in Italy</p>
+        <h1 id="hero-title">L’immaginazione prende <span class="gradient-text">forma in 3D.</span></h1>
+        <p class="hero-copy">Oggetti contemporanei, stampati strato dopo strato. Piccole serie, materiali selezionati e dettagli pensati per rendere unico ogni spazio.</p>
+        <div class="hero-actions">
+          <a class="primary-button" href="#collezione">
+            Esplora la collezione
+            <span aria-hidden="true">↓</span>
+          </a>
+          <p class="hero-note"><span>●</span> Personalizzazioni disponibili</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="collection container" id="collezione" aria-labelledby="collection-title">
+      <div class="section-heading">
+        <div>
+          <p class="section-kicker">Ultime creazioni</p>
+          <h2 id="collection-title">La collezione</h2>
+        </div>
+        <span class="product-count" id="product-count" aria-live="polite"></span>
+      </div>
+      <div class="product-grid" id="product-grid" aria-live="polite"></div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <span>© <span id="current-year"></span> 3D.CRAFT</span>
+      <span>Progettato e stampato con cura in Italia.</span>
+    </div>
+  </footer>
+
+  <script>
+    const STORAGE_KEY = "3d_products";
+    const WHATSAPP_NUMBER = "393446498901";
+
+    function createDemoImage(type) {
+      const isVase = type === "vase";
+      const accent = isVase ? "#ff3cac" : "#5688ff";
+      const accentTwo = isVase ? "#8f45ff" : "#c7ff4a";
+      const shape = isVase
+        ? `<path d="M285 108h230l-33 79 54 330c12 72-42 135-115 135h-42c-73 0-127-63-115-135l54-330-33-79Z" fill="url(#product)"/><path d="M318 187h164M290 330h220M270 470h260" stroke="#fff" stroke-opacity=".16" stroke-width="3"/>`
+        : `<path d="M256 548V306c0-99 58-169 144-169s144 70 144 169v242" fill="none" stroke="url(#product)" stroke-width="68" stroke-linecap="round"/><rect x="198" y="482" width="118" height="172" rx="50" fill="url(#product)"/><rect x="484" y="482" width="118" height="172" rx="50" fill="url(#product)"/><path d="M400 618v72M322 690h156" stroke="#e9e9ee" stroke-width="22" stroke-linecap="round"/>`;
+
+      const svg = `
+        <svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+          <defs>
+            <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#1d1d26"/><stop offset="1" stop-color="#09090d"/></linearGradient>
+            <linearGradient id="product" x1="0" y1="0" x2="1" y2="1"><stop stop-color="${accent}"/><stop offset="1" stop-color="${accentTwo}"/></linearGradient>
+            <filter id="glow"><feGaussianBlur stdDeviation="38"/></filter>
+          </defs>
+          <rect width="800" height="600" fill="url(#bg)"/>
+          <circle cx="400" cy="326" r="215" fill="${accent}" opacity=".17" filter="url(#glow)"/>
+          <path d="M0 510 800 380v220H0Z" fill="#fff" opacity=".035"/>
+          <g transform="translate(0 -20)">${shape}</g>
+        </svg>`;
+
+      return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
+    }
+
+    const DEFAULT_PRODUCTS = [
+      {
+        id: "demo-vase",
+        title: "Vaso Geometrico",
+        description: "Vaso scultoreo in PLA riciclato, finitura opaca e linee sfaccettate. Altezza 24 cm; disponibile in colori personalizzati.",
+        price: "34,90",
+        image: createDemoImage("vase")
+      },
+      {
+        id: "demo-headphones",
+        title: "Supporto Cuffie",
+        description: "Supporto da scrivania in PETG ad alta resistenza, con base antiscivolo e passaggio cavo integrato. Altezza 27 cm.",
+        price: "49,90",
+        image: createDemoImage("headphones")
+      }
+    ];
+
+    function getProducts() {
+      const savedProducts = localStorage.getItem(STORAGE_KEY);
+
+      if (savedProducts === null) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(DEFAULT_PRODUCTS));
+        return DEFAULT_PRODUCTS;
+      }
+
+      try {
+        const parsedProducts = JSON.parse(savedProducts);
+        return Array.isArray(parsedProducts) ? parsedProducts : [];
+      } catch (error) {
+        console.error("Impossibile leggere il catalogo:", error);
+        return [];
+      }
+    }
+
+    function normalizePrice(price) {
+      return String(price ?? "").replace(/€/g, "").trim();
+    }
+
+    function orderOnWhatsApp(product) {
+      const price = normalizePrice(product.price);
+      const message = `Ciao! Vorrei ordinare il prodotto: ${product.title} (Prezzo: €${price})`;
+      const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+      window.open(whatsappUrl, "_blank", "noopener,noreferrer");
+    }
+
+    function createProductCard(product) {
+      const article = document.createElement("article");
+      article.className = "product-card";
+
+      const media = document.createElement("div");
+      media.className = "product-media";
+
+      const image = document.createElement("img");
+      image.className = "product-image";
+      image.src = product.image || createDemoImage("vase");
+      image.alt = product.title ? `Foto di ${product.title}` : "Foto prodotto";
+      image.loading = "lazy";
+
+      const badge = document.createElement("span");
+      badge.className = "product-badge";
+      badge.textContent = "Stampa 3D";
+
+      media.append(image, badge);
+
+      const body = document.createElement("div");
+      body.className = "product-body";
+
+      const titleRow = document.createElement("div");
+      titleRow.className = "product-title-row";
+
+      const title = document.createElement("h3");
+      title.className = "product-title";
+      title.textContent = product.title || "Prodotto senza titolo";
+
+      const price = document.createElement("span");
+      price.className = "product-price";
+      price.textContent = `€ ${normalizePrice(product.price)}`;
+
+      const description = document.createElement("p");
+      description.className = "product-description";
+      description.textContent = product.description || "";
+
+      const button = document.createElement("button");
+      button.className = "primary-button whatsapp-button";
+      button.type = "button";
+      button.setAttribute("aria-label", `Ordina ${product.title} via WhatsApp`);
+      button.textContent = "Ordina via WhatsApp  ↗";
+      button.addEventListener("click", () => orderOnWhatsApp(product));
+
+      titleRow.append(title, price);
+      body.append(titleRow, description, button);
+      article.append(media, body);
+
+      return article;
+    }
+
+    function renderProducts() {
+      const products = getProducts();
+      const grid = document.getElementById("product-grid");
+      const count = document.getElementById("product-count");
+
+      grid.replaceChildren();
+      count.textContent = `${products.length} ${products.length === 1 ? "prodotto" : "prodotti"}`;
+
+      if (products.length === 0) {
+        const emptyState = document.createElement("div");
+        emptyState.className = "empty-state";
+
+        const title = document.createElement("strong");
+        title.textContent = "Nuove forme in arrivo.";
+
+        const copy = document.createElement("span");
+        copy.textContent = "La collezione è in aggiornamento. Torna presto a trovarci.";
+
+        emptyState.append(title, copy);
+        grid.append(emptyState);
+        return;
+      }
+
+      const fragment = document.createDocumentFragment();
+      products.forEach((product) => fragment.append(createProductCard(product)));
+      grid.append(fragment);
+    }
+
+    document.getElementById("current-year").textContent = new Date().getFullYear();
+    window.addEventListener("storage", (event) => {
+      if (event.key === STORAGE_KEY) renderProducts();
+    });
+    renderProducts();
+  </script>
+</body>
+</html>
