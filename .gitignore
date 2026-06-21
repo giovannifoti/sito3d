@@ -2,4 +2,4 @@
 .env
 .netlify/
 dist/
-
+*.zip

@@ -1,4 +1,4 @@
-# Guida completa — 3D.CRAFT
+# Guida completa — artigianidel3d
 
 Questa guida parte da zero. Al termine avrai:
 
@@ -17,7 +17,7 @@ Non servono server personali e non ci sono dipendenze npm da installare.
 2. Premi **New project**.
 3. Se richiesto, crea prima un'organizzazione.
 4. Imposta questi dati:
-   - **Name:** `3d-craft`;
+   - **Name:** `artigianidel3d`;
    - **Database password:** genera una password forte e conservala nel tuo
      password manager. Non è la password del pannello admin;
    - **Region:** scegli una regione europea vicina, per esempio Frankfurt;
@@ -142,7 +142,7 @@ richiedono un nuovo deploy.
 ## 6. Prova completa prima della pubblicazione
 
 1. Apri la home: con un database nuovo vedrai il catalogo vuoto.
-2. Apri direttamente `https://TUO-SITO.netlify.app/admin.html`.
+2. Apri direttamente `https://artigianidel3d.it/admin.html`.
 3. Accedi con l'email e la password create in Supabase.
 4. Inserisci un prodotto con immagine JPG, PNG o WebP sotto i 5 MB.
 5. Torna alla home e aggiorna la pagina: il prodotto deve comparire.

@@ -3,10 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="3D.CRAFT — oggetti stampati in 3D, progettati e realizzati in Italia.">
+  <meta name="description" content="artigianidel3d — oggetti stampati in 3D, progettati e realizzati in Italia.">
   <meta name="theme-color" content="#07070a">
-  <title>3D.CRAFT — Portfolio</title>
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%2307070a'/%3E%3Cpath d='M17 18h16c9 0 15 5 15 14S42 46 33 46H17l8-8h8c4 0 7-2 7-6s-3-6-7-6h-8z' fill='%23ff3cac'/%3E%3C/svg%3E">
+  <meta property="og:title" content="artigianidel3d — L’immaginazione prende forma">
+  <meta property="og:description" content="Oggetti contemporanei stampati in 3D, piccole serie e personalizzazioni.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://artigianidel3d.it/">
+  <title>artigianidel3d — Portfolio</title>
+  <link rel="canonical" href="https://artigianidel3d.it/">
+  <link rel="icon" type="image/svg+xml" href="assets/logo-mark.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
@@ -99,13 +104,14 @@
     }
 
     .logo {
-      font-size: 1rem;
-      font-weight: 800;
-      letter-spacing: -0.04em;
+      display: inline-flex;
+      align-items: center;
+      flex: 0 0 auto;
     }
 
-    .logo-dot {
-      color: var(--pink);
+    .brand-logo {
+      width: 190px;
+      height: auto;
     }
 
     .nav-links {
@@ -491,6 +497,10 @@
         font-size: 0.78rem;
       }
 
+      .brand-logo {
+        width: 158px;
+      }
+
       .nav-link {
         padding: 9px;
       }
@@ -551,7 +561,9 @@
 <body>
   <header class="site-header">
     <div class="container navbar">
-      <a class="logo" href="index.html" aria-label="3D.CRAFT, home">3D<span class="logo-dot">.</span>CRAFT</a>
+      <a class="logo" href="index.html" aria-label="artigianidel3d, home">
+        <img class="brand-logo" src="assets/logo-artigianidel3d.svg" alt="artigianidel3d">
+      </a>
       <nav class="nav-links" aria-label="Navigazione principale">
         <a class="nav-link active" href="index.html" aria-current="page">Portfolio</a>
       </nav>
@@ -562,7 +574,7 @@
     <section class="hero container" aria-labelledby="hero-title">
       <div class="hero-orb" aria-hidden="true"></div>
       <div class="hero-content">
-        <p class="eyebrow">Design indipendente · Made in Italy</p>
+        <p class="eyebrow">artigianidel3d · Made in Italy</p>
         <h1 id="hero-title">L’immaginazione prende <span class="gradient-text">forma in 3D.</span></h1>
         <p class="hero-copy">Oggetti contemporanei, stampati strato dopo strato. Piccole serie, materiali selezionati e dettagli pensati per rendere unico ogni spazio.</p>
         <div class="hero-actions">
@@ -589,7 +601,7 @@
 
   <footer>
     <div class="container footer-inner">
-      <span>© <span id="current-year"></span> 3D.CRAFT</span>
+      <span>© <span id="current-year"></span> artigianidel3d</span>
       <span>Progettato e stampato con cura in Italia.</span>
     </div>
   </footer>

@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256" role="img" aria-labelledby="title description">
+  <title id="title">Simbolo artigianidel3d</title>
+  <desc id="description">Cubo tridimensionale con gradiente fucsia e blu</desc>
+  <defs>
+    <linearGradient id="brand-gradient" x1="28" y1="24" x2="224" y2="230" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#ff3cac"/>
+      <stop offset="0.55" stop-color="#ad65ff"/>
+      <stop offset="1" stop-color="#5688ff"/>
+    </linearGradient>
+    <radialGradient id="background-glow" cx="0" cy="0" r="1" gradientTransform="translate(79 61) rotate(48) scale(192)">
+      <stop stop-color="#272332"/>
+      <stop offset="1" stop-color="#09090d"/>
+    </radialGradient>
+    <filter id="soft-glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="12"/>
+    </filter>
+  </defs>
+
+  <rect x="8" y="8" width="240" height="240" rx="68" fill="url(#background-glow)"/>
+  <rect x="9.5" y="9.5" width="237" height="237" rx="66.5" fill="none" stroke="url(#brand-gradient)" stroke-width="3"/>
+  <path d="m128 57 67 39v76l-67 39-67-39V96Z" fill="none" stroke="url(#brand-gradient)" stroke-width="14" stroke-linejoin="round"/>
+  <path d="m61 96 67 41 67-41M128 137v74" fill="none" stroke="#f8f7fb" stroke-opacity=".82" stroke-width="11" stroke-linejoin="round"/>
+  <circle cx="128" cy="137" r="18" fill="#c7ff4a" opacity=".38" filter="url(#soft-glow)"/>
+  <circle cx="128" cy="137" r="9" fill="#c7ff4a"/>
+</svg>
+

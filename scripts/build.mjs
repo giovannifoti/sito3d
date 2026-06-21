@@ -1,4 +1,4 @@
-import { readFile, writeFile, mkdir, rm, copyFile } from "node:fs/promises";
+import { readFile, writeFile, mkdir, rm, copyFile, cp } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -57,7 +57,8 @@ await mkdir(outputDirectory, { recursive: true });
 await Promise.all([
   copyFile(join(projectRoot, "index.html"), join(outputDirectory, "index.html")),
   copyFile(join(projectRoot, "admin.html"), join(outputDirectory, "admin.html")),
-  copyFile(join(projectRoot, "_headers"), join(outputDirectory, "_headers"))
+  copyFile(join(projectRoot, "_headers"), join(outputDirectory, "_headers")),
+  cp(join(projectRoot, "assets"), join(outputDirectory, "assets"), { recursive: true })
 ]);
 
 const browserConfig = `window.APP_CONFIG = Object.freeze(${JSON.stringify({

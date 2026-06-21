@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="96" viewBox="0 0 400 96" role="img" aria-labelledby="title description">
+  <title id="title">artigianidel3d</title>
+  <desc id="description">Logo artigianidel3d per sfondi scuri</desc>
+  <defs>
+    <linearGradient id="brand-gradient" x1="16" y1="16" x2="474" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#ff3cac"/>
+      <stop offset="0.55" stop-color="#ad65ff"/>
+      <stop offset="1" stop-color="#5688ff"/>
+    </linearGradient>
+    <filter id="soft-glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="5"/>
+    </filter>
+  </defs>
+
+  <g>
+    <rect x="8" y="8" width="80" height="80" rx="24" fill="#101014" stroke="url(#brand-gradient)" stroke-width="2.5"/>
+    <path d="M48 23 72 37v28L48 79 24 65V37Z" fill="none" stroke="url(#brand-gradient)" stroke-width="5" stroke-linejoin="round"/>
+    <path d="m24 37 24 15 24-15M48 52v27" fill="none" stroke="#f8f7fb" stroke-opacity=".78" stroke-width="4" stroke-linejoin="round"/>
+    <circle cx="48" cy="52" r="5" fill="#c7ff4a" filter="url(#soft-glow)" opacity=".45"/>
+    <circle cx="48" cy="52" r="3.5" fill="#c7ff4a"/>
+  </g>
+
+  <text x="108" y="61" fill="#f8f7fb" font-family="Inter, Arial, sans-serif" font-size="43" font-weight="800" letter-spacing="-2.1">artigiani</text>
+  <text x="270" y="61" fill="url(#brand-gradient)" font-family="Inter, Arial, sans-serif" font-size="43" font-weight="800" letter-spacing="-2.1">del3d</text>
+</svg>

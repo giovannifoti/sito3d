@@ -1,4 +1,4 @@
--- 3D.CRAFT — Database, autenticazione e Storage
+-- artigianidel3d — Database, autenticazione e Storage
 -- Eseguire questo file nel SQL Editor del progetto Supabase.
 
 begin;
@@ -27,7 +27,7 @@ create table if not exists public.products (
 );
 
 comment on table public.products is
-  'Catalogo pubblico dei prodotti 3D.CRAFT. Le immagini risiedono nel bucket product-images.';
+  'Catalogo pubblico dei prodotti artigianidel3d. Le immagini risiedono nel bucket product-images.';
 
 create index if not exists products_created_at_idx
   on public.products (created_at desc);

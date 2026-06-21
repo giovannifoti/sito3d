@@ -1,4 +1,4 @@
-# 3D.CRAFT
+# artigianidel3d
 
 Portfolio responsive per prodotti stampati in 3D con ordini via WhatsApp,
 catalogo Supabase e pannello admin autenticato.
@@ -7,6 +7,7 @@ catalogo Supabase e pannello admin autenticato.
 
 - `index.html` — vetrina pubblica;
 - `admin.html` — login e gestione prodotti;
+- `assets/` — logo orizzontale, variante chiara e simbolo nei formati SVG e PNG;
 - `supabase-schema.sql` — database, Storage e policy RLS;
 - `scripts/build.mjs` — build Netlify e generazione della configurazione;
 - `netlify.toml` — comando di build e directory di pubblicazione;

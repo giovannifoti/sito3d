@@ -4,7 +4,7 @@ set -e
 cd "$(dirname "$0")"
 
 echo ""
-echo "Configurazione 3D.CRAFT"
+echo "Configurazione artigianidel3d"
 echo "-----------------------"
 echo "Incolla i due valori mostrati dal pulsante Connect di Supabase."
 echo ""
@@ -49,4 +49,3 @@ echo "Trascina la cartella dist su https://app.netlify.com/drop"
 open dist
 echo ""
 read "?Premi Invio per chiudere."
-
