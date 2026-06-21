@@ -20,6 +20,6 @@
     <circle cx="48" cy="52" r="3.5" fill="#c7ff4a"/>
   </g>
 
-  <text x="108" y="61" fill="#f8f7fb" font-family="Inter, Arial, sans-serif" font-size="43" font-weight="800" letter-spacing="-2.1">artigiani</text>
-  <text x="270" y="61" fill="url(#brand-gradient)" font-family="Inter, Arial, sans-serif" font-size="43" font-weight="800" letter-spacing="-2.1">del3d</text>
+  <text x="108" y="60" fill="#f8f7fb" font-family="Avenir Next, Manrope, Helvetica Neue, Arial, sans-serif" font-size="40" font-weight="600" letter-spacing="-1.35">artigiani</text>
+  <text x="244" y="60" fill="url(#brand-gradient)" font-family="Avenir Next, Manrope, Helvetica Neue, Arial, sans-serif" font-size="40" font-weight="600" letter-spacing="-1.35">del3d</text>
 </svg>

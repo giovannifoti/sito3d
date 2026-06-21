@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1080" viewBox="0 0 1080 1080" role="img" aria-labelledby="title description">
+  <title id="title">artigianidel3d — logo Instagram</title>
+  <desc id="description">Logo circolare con cubo tridimensionale fucsia e blu</desc>
+  <defs>
+    <linearGradient id="brand-gradient" x1="170" y1="130" x2="920" y2="970" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#ff3cac"/>
+      <stop offset="0.52" stop-color="#b25fff"/>
+      <stop offset="1" stop-color="#5688ff"/>
+    </linearGradient>
+    <radialGradient id="background" cx="0" cy="0" r="1" gradientTransform="translate(350 280) rotate(47) scale(880)">
+      <stop stop-color="#282333"/>
+      <stop offset="0.48" stop-color="#121218"/>
+      <stop offset="1" stop-color="#07070a"/>
+    </radialGradient>
+    <radialGradient id="neon-glow" cx="0" cy="0" r="1" gradientTransform="translate(540 564) scale(260)">
+      <stop stop-color="#c7ff4a" stop-opacity=".15"/>
+      <stop offset="1" stop-color="#c7ff4a" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="outer-glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="28"/>
+    </filter>
+  </defs>
+
+  <circle cx="540" cy="540" r="514" fill="url(#background)"/>
+  <circle cx="540" cy="540" r="505" fill="none" stroke="url(#brand-gradient)" stroke-width="18"/>
+  <circle cx="540" cy="540" r="446" fill="none" stroke="#ffffff" stroke-opacity=".045" stroke-width="2"/>
+  <circle cx="540" cy="564" r="260" fill="url(#neon-glow)"/>
+
+  <path d="m540 275 259 150v294L540 869 281 719V425Z" fill="none" stroke="url(#brand-gradient)" stroke-width="54" stroke-linejoin="round"/>
+  <path d="m281 425 259 158 259-158M540 583v286" fill="none" stroke="#f8f7fb" stroke-opacity=".88" stroke-width="40" stroke-linejoin="round"/>
+
+  <circle cx="540" cy="583" r="74" fill="#c7ff4a" opacity=".24" filter="url(#outer-glow)"/>
+  <circle cx="540" cy="583" r="31" fill="#c7ff4a"/>
+</svg>
+
