@@ -1,8 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="400" height="96" viewBox="0 0 400 96" role="img" aria-labelledby="title description">
+<svg xmlns="http://www.w3.org/2000/svg" width="420" height="96" viewBox="0 0 420 96" role="img" aria-labelledby="title description">
   <title id="title">artigianidel3d</title>
   <desc id="description">Logo artigianidel3d per sfondi scuri</desc>
   <defs>
-    <linearGradient id="brand-gradient" x1="16" y1="16" x2="474" y2="80" gradientUnits="userSpaceOnUse">
+    <linearGradient id="icon-gradient" x1="24" y1="23" x2="72" y2="79" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#ff3cac"/>
+      <stop offset="0.55" stop-color="#ad65ff"/>
+      <stop offset="1" stop-color="#5688ff"/>
+    </linearGradient>
+    <linearGradient id="word-gradient" x1="278" y1="22" x2="395" y2="72" gradientUnits="userSpaceOnUse">
       <stop stop-color="#ff3cac"/>
       <stop offset="0.55" stop-color="#ad65ff"/>
       <stop offset="1" stop-color="#5688ff"/>
@@ -13,13 +18,13 @@
   </defs>
 
   <g>
-    <rect x="8" y="8" width="80" height="80" rx="24" fill="#101014" stroke="url(#brand-gradient)" stroke-width="2.5"/>
-    <path d="M48 23 72 37v28L48 79 24 65V37Z" fill="none" stroke="url(#brand-gradient)" stroke-width="5" stroke-linejoin="round"/>
+    <rect x="8" y="8" width="80" height="80" rx="24" fill="#101014" stroke="url(#icon-gradient)" stroke-width="2.5"/>
+    <path d="M48 23 72 37v28L48 79 24 65V37Z" fill="none" stroke="url(#icon-gradient)" stroke-width="5" stroke-linejoin="round"/>
     <path d="m24 37 24 15 24-15M48 52v27" fill="none" stroke="#f8f7fb" stroke-opacity=".78" stroke-width="4" stroke-linejoin="round"/>
     <circle cx="48" cy="52" r="5" fill="#c7ff4a" filter="url(#soft-glow)" opacity=".45"/>
     <circle cx="48" cy="52" r="3.5" fill="#c7ff4a"/>
   </g>
 
   <text x="108" y="60" fill="#f8f7fb" font-family="Avenir Next, Manrope, Helvetica Neue, Arial, sans-serif" font-size="40" font-weight="600" letter-spacing="-1.35">artigiani</text>
-  <text x="244" y="60" fill="url(#brand-gradient)" font-family="Avenir Next, Manrope, Helvetica Neue, Arial, sans-serif" font-size="40" font-weight="600" letter-spacing="-1.35">del3d</text>
+  <text x="278" y="60" fill="url(#word-gradient)" font-family="Avenir Next, Manrope, Helvetica Neue, Arial, sans-serif" font-size="40" font-weight="600" letter-spacing="-1.35">del3d</text>
 </svg>

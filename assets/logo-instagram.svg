@@ -4,7 +4,7 @@
   <defs>
     <linearGradient id="brand-gradient" x1="170" y1="130" x2="920" y2="970" gradientUnits="userSpaceOnUse">
       <stop stop-color="#ff3cac"/>
-      <stop offset="0.52" stop-color="#b25fff"/>
+      <stop offset="0.55" stop-color="#ad65ff"/>
       <stop offset="1" stop-color="#5688ff"/>
     </linearGradient>
     <radialGradient id="background" cx="0" cy="0" r="1" gradientTransform="translate(350 280) rotate(47) scale(880)">
@@ -32,4 +32,3 @@
   <circle cx="540" cy="583" r="74" fill="#c7ff4a" opacity=".24" filter="url(#outer-glow)"/>
   <circle cx="540" cy="583" r="31" fill="#c7ff4a"/>
 </svg>
-
