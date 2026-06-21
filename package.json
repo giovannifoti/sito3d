@@ -1,0 +1,14 @@
+{
+  "name": "3d-craft-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Portfolio e catalogo amministrabile per prodotti stampati in 3D.",
+  "scripts": {
+    "build": "node scripts/build.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
+

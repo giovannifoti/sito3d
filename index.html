@@ -6,6 +6,7 @@
   <meta name="description" content="3D.CRAFT — oggetti stampati in 3D, progettati e realizzati in Italia.">
   <meta name="theme-color" content="#07070a">
   <title>3D.CRAFT — Portfolio</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%2307070a'/%3E%3Cpath d='M17 18h16c9 0 15 5 15 14S42 46 33 46H17l8-8h8c4 0 7-2 7-6s-3-6-7-6h-8z' fill='%23ff3cac'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
@@ -439,6 +440,29 @@
       font-size: 1.15rem;
     }
 
+    .state-action {
+      width: auto;
+      min-height: 44px;
+      margin-top: 20px;
+      padding-inline: 18px;
+    }
+
+    .loading-dot {
+      display: inline-block;
+      width: 9px;
+      height: 9px;
+      margin-right: 8px;
+      border-radius: 50%;
+      background: var(--blue);
+      box-shadow: 0 0 18px rgba(86, 136, 255, 0.75);
+      animation: pulse 1.1s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.35; transform: scale(0.85); }
+      50% { opacity: 1; transform: scale(1); }
+    }
+
     footer {
       border-top: 1px solid var(--line);
       color: var(--muted);
@@ -530,7 +554,6 @@
       <a class="logo" href="index.html" aria-label="3D.CRAFT, home">3D<span class="logo-dot">.</span>CRAFT</a>
       <nav class="nav-links" aria-label="Navigazione principale">
         <a class="nav-link active" href="index.html" aria-current="page">Portfolio</a>
-        <a class="nav-link" href="admin.html">Gestione Admin</a>
       </nav>
     </div>
   </header>
@@ -571,74 +594,54 @@
     </div>
   </footer>
 
+  <script src="config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.108.2"></script>
   <script>
-    const STORAGE_KEY = "3d_products";
+    const APP_CONFIG = window.APP_CONFIG || {};
+    const SUPABASE_URL = String(APP_CONFIG.supabaseUrl || "");
+    const SUPABASE_PUBLISHABLE_KEY = String(APP_CONFIG.supabasePublishableKey || "");
+    const PRODUCT_IMAGES_BUCKET = "product-images";
     const WHATSAPP_NUMBER = "393446498901";
 
-    function createDemoImage(type) {
-      const isVase = type === "vase";
-      const accent = isVase ? "#ff3cac" : "#5688ff";
-      const accentTwo = isVase ? "#8f45ff" : "#c7ff4a";
-      const shape = isVase
-        ? `<path d="M285 108h230l-33 79 54 330c12 72-42 135-115 135h-42c-73 0-127-63-115-135l54-330-33-79Z" fill="url(#product)"/><path d="M318 187h164M290 330h220M270 470h260" stroke="#fff" stroke-opacity=".16" stroke-width="3"/>`
-        : `<path d="M256 548V306c0-99 58-169 144-169s144 70 144 169v242" fill="none" stroke="url(#product)" stroke-width="68" stroke-linecap="round"/><rect x="198" y="482" width="118" height="172" rx="50" fill="url(#product)"/><rect x="484" y="482" width="118" height="172" rx="50" fill="url(#product)"/><path d="M400 618v72M322 690h156" stroke="#e9e9ee" stroke-width="22" stroke-linecap="round"/>`;
+    const hasSupabaseConfig =
+      SUPABASE_URL.startsWith("https://") &&
+      SUPABASE_PUBLISHABLE_KEY.length > 20 &&
+      SUPABASE_PUBLISHABLE_KEY.startsWith("sb_publishable_");
 
-      const svg = `
-        <svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
-          <defs>
-            <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#1d1d26"/><stop offset="1" stop-color="#09090d"/></linearGradient>
-            <linearGradient id="product" x1="0" y1="0" x2="1" y2="1"><stop stop-color="${accent}"/><stop offset="1" stop-color="${accentTwo}"/></linearGradient>
-            <filter id="glow"><feGaussianBlur stdDeviation="38"/></filter>
-          </defs>
-          <rect width="800" height="600" fill="url(#bg)"/>
-          <circle cx="400" cy="326" r="215" fill="${accent}" opacity=".17" filter="url(#glow)"/>
-          <path d="M0 510 800 380v220H0Z" fill="#fff" opacity=".035"/>
-          <g transform="translate(0 -20)">${shape}</g>
-        </svg>`;
+    const supabaseClient = hasSupabaseConfig
+      ? window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY)
+      : null;
 
-      return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
+    const currencyFormatter = new Intl.NumberFormat("it-IT", {
+      style: "currency",
+      currency: "EUR"
+    });
+
+    let lastCatalogUpdate = 0;
+
+    function formatPrice(price) {
+      const numericPrice = Number(price);
+      return Number.isFinite(numericPrice) ? currencyFormatter.format(numericPrice) : "€ 0,00";
     }
 
-    const DEFAULT_PRODUCTS = [
-      {
-        id: "demo-vase",
-        title: "Vaso Geometrico",
-        description: "Vaso scultoreo in PLA riciclato, finitura opaca e linee sfaccettate. Altezza 24 cm; disponibile in colori personalizzati.",
-        price: "34,90",
-        image: createDemoImage("vase")
-      },
-      {
-        id: "demo-headphones",
-        title: "Supporto Cuffie",
-        description: "Supporto da scrivania in PETG ad alta resistenza, con base antiscivolo e passaggio cavo integrato. Altezza 27 cm.",
-        price: "49,90",
-        image: createDemoImage("headphones")
-      }
-    ];
-
-    function getProducts() {
-      const savedProducts = localStorage.getItem(STORAGE_KEY);
-
-      if (savedProducts === null) {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(DEFAULT_PRODUCTS));
-        return DEFAULT_PRODUCTS;
-      }
-
-      try {
-        const parsedProducts = JSON.parse(savedProducts);
-        return Array.isArray(parsedProducts) ? parsedProducts : [];
-      } catch (error) {
-        console.error("Impossibile leggere il catalogo:", error);
-        return [];
-      }
+    function formatWhatsAppPrice(price) {
+      const numericPrice = Number(price);
+      return Number.isFinite(numericPrice)
+        ? numericPrice.toFixed(2).replace(".", ",")
+        : "0,00";
     }
 
-    function normalizePrice(price) {
-      return String(price ?? "").replace(/€/g, "").trim();
+    function getImageUrl(imagePath) {
+      if (!imagePath) return "";
+      if (/^(https?:|data:)/i.test(imagePath)) return imagePath;
+
+      return supabaseClient.storage
+        .from(PRODUCT_IMAGES_BUCKET)
+        .getPublicUrl(imagePath).data.publicUrl;
     }
 
     function orderOnWhatsApp(product) {
-      const price = normalizePrice(product.price);
+      const price = formatWhatsAppPrice(product.price);
       const message = `Ciao! Vorrei ordinare il prodotto: ${product.title} (Prezzo: €${price})`;
       const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
       window.open(whatsappUrl, "_blank", "noopener,noreferrer");
@@ -653,14 +656,13 @@
 
       const image = document.createElement("img");
       image.className = "product-image";
-      image.src = product.image || createDemoImage("vase");
-      image.alt = product.title ? `Foto di ${product.title}` : "Foto prodotto";
+      image.src = getImageUrl(product.image_path);
+      image.alt = `Foto di ${product.title}`;
       image.loading = "lazy";
 
       const badge = document.createElement("span");
       badge.className = "product-badge";
       badge.textContent = "Stampa 3D";
-
       media.append(image, badge);
 
       const body = document.createElement("div");
@@ -671,15 +673,15 @@
 
       const title = document.createElement("h3");
       title.className = "product-title";
-      title.textContent = product.title || "Prodotto senza titolo";
+      title.textContent = product.title;
 
       const price = document.createElement("span");
       price.className = "product-price";
-      price.textContent = `€ ${normalizePrice(product.price)}`;
+      price.textContent = formatPrice(product.price);
 
       const description = document.createElement("p");
       description.className = "product-description";
-      description.textContent = product.description || "";
+      description.textContent = product.description;
 
       const button = document.createElement("button");
       button.className = "primary-button whatsapp-button";
@@ -691,30 +693,50 @@
       titleRow.append(title, price);
       body.append(titleRow, description, button);
       article.append(media, body);
-
       return article;
     }
 
-    function renderProducts() {
-      const products = getProducts();
+    function renderState(titleText, copyText, options = {}) {
       const grid = document.getElementById("product-grid");
       const count = document.getElementById("product-count");
+      const state = document.createElement("div");
+      state.className = "empty-state";
 
+      const title = document.createElement("strong");
+      if (options.loading) {
+        const dot = document.createElement("span");
+        dot.className = "loading-dot";
+        dot.setAttribute("aria-hidden", "true");
+        title.append(dot, titleText);
+      } else {
+        title.textContent = titleText;
+      }
+
+      const copy = document.createElement("span");
+      copy.textContent = copyText;
+      state.append(title, copy);
+
+      if (options.retry) {
+        const retryButton = document.createElement("button");
+        retryButton.className = "primary-button state-action";
+        retryButton.type = "button";
+        retryButton.textContent = "Riprova";
+        retryButton.addEventListener("click", loadProducts);
+        state.append(retryButton);
+      }
+
+      grid.replaceChildren(state);
+      count.textContent = options.loading ? "Caricamento" : "0 prodotti";
+    }
+
+    function renderProducts(products) {
+      const grid = document.getElementById("product-grid");
+      const count = document.getElementById("product-count");
       grid.replaceChildren();
       count.textContent = `${products.length} ${products.length === 1 ? "prodotto" : "prodotti"}`;
 
       if (products.length === 0) {
-        const emptyState = document.createElement("div");
-        emptyState.className = "empty-state";
-
-        const title = document.createElement("strong");
-        title.textContent = "Nuove forme in arrivo.";
-
-        const copy = document.createElement("span");
-        copy.textContent = "La collezione è in aggiornamento. Torna presto a trovarci.";
-
-        emptyState.append(title, copy);
-        grid.append(emptyState);
+        renderState("Nuove forme in arrivo.", "La collezione è in aggiornamento. Torna presto a trovarci.");
         return;
       }
 
@@ -723,11 +745,34 @@
       grid.append(fragment);
     }
 
+    async function loadProducts() {
+      if (!supabaseClient) {
+        renderState("Catalogo in configurazione.", "La collezione sarà disponibile a breve.");
+        return;
+      }
+
+      renderState("Carico la collezione…", "Solo un istante.", { loading: true });
+
+      const { data, error } = await supabaseClient
+        .from("products")
+        .select("id,title,description,price,image_path,created_at")
+        .order("created_at", { ascending: false });
+
+      if (error) {
+        console.error("Errore durante il caricamento dei prodotti:", error);
+        renderState("Qualcosa non ha preso forma.", "Non è stato possibile caricare il catalogo.", { retry: true });
+        return;
+      }
+
+      lastCatalogUpdate = Date.now();
+      renderProducts(data || []);
+    }
+
     document.getElementById("current-year").textContent = new Date().getFullYear();
-    window.addEventListener("storage", (event) => {
-      if (event.key === STORAGE_KEY) renderProducts();
+    document.addEventListener("visibilitychange", () => {
+      if (!document.hidden && Date.now() - lastCatalogUpdate > 5000) loadProducts();
     });
-    renderProducts();
+    loadProducts();
   </script>
 </body>
 </html>
