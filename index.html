@@ -268,7 +268,36 @@
       transform: translateY(-1px);
     }
 
+    .quote-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 54px;
+      padding: 0 22px;
+      border: 1px solid rgba(86, 136, 255, 0.42);
+      border-radius: 14px;
+      background: linear-gradient(135deg, rgba(86, 136, 255, 0.16), rgba(255, 60, 172, 0.12));
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      color: var(--text);
+      font-size: 0.92rem;
+      font-weight: 700;
+      transition: border-color 180ms ease, background-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+    }
+
+    .quote-button:hover {
+      border-color: rgba(255, 60, 172, 0.68);
+      background: linear-gradient(135deg, rgba(86, 136, 255, 0.24), rgba(255, 60, 172, 0.2));
+      box-shadow: 0 16px 42px rgba(86, 136, 255, 0.14);
+      transform: translateY(-3px);
+    }
+
+    .quote-button:active {
+      transform: translateY(-1px);
+    }
+
     .primary-button:focus-visible,
+    .quote-button:focus-visible,
     .nav-link:focus-visible {
       outline: 3px solid rgba(199, 255, 74, 0.7);
       outline-offset: 3px;
@@ -517,6 +546,16 @@
         opacity: 0.4;
       }
 
+      .hero-actions .primary-button,
+      .hero-actions .quote-button {
+        width: 100%;
+      }
+
+      .hero-note {
+        width: 100%;
+        text-align: center;
+      }
+
       h1 {
         font-size: clamp(3.25rem, 17vw, 5.4rem);
       }
@@ -581,6 +620,10 @@
           <a class="primary-button" href="#collezione">
             Esplora la collezione
             <span aria-hidden="true">↓</span>
+          </a>
+          <a class="quote-button" id="quote-button" href="#" target="_blank" rel="noopener noreferrer">
+            Richiedi un preventivo
+            <span aria-hidden="true">↗</span>
           </a>
           <p class="hero-note"><span>●</span> Personalizzazioni disponibili</p>
         </div>
@@ -657,6 +700,12 @@
       const message = `Ciao! Vorrei ordinare il prodotto: ${product.title} (Prezzo: €${price})`;
       const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
       window.open(whatsappUrl, "_blank", "noopener,noreferrer");
+    }
+
+    function configureQuoteButton() {
+      const message = "Ciao! Vorrei richiedere un preventivo per una stampa 3D personalizzata.";
+      const quoteUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+      document.getElementById("quote-button").href = quoteUrl;
     }
 
     function createProductCard(product) {
@@ -781,6 +830,7 @@
     }
 
     document.getElementById("current-year").textContent = new Date().getFullYear();
+    configureQuoteButton();
     document.addEventListener("visibilitychange", () => {
       if (!document.hidden && Date.now() - lastCatalogUpdate > 5000) loadProducts();
     });
