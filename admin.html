@@ -96,12 +96,31 @@
     .logo {
       display: inline-flex;
       align-items: center;
+      gap: 10px;
       flex: 0 0 auto;
     }
 
-    .brand-logo {
-      width: 190px;
-      height: auto;
+    .brand-mark {
+      width: 48px;
+      height: 48px;
+      flex: 0 0 auto;
+    }
+
+    .brand-wordmark {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 5px;
+      font-size: 1.28rem;
+      font-weight: 700;
+      letter-spacing: -0.055em;
+      line-height: 1;
+    }
+
+    .brand-accent {
+      background: linear-gradient(100deg, var(--pink), #ad65ff 52%, var(--blue));
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
     }
 
     .back-link {
@@ -665,8 +684,18 @@
         display: none;
       }
 
-      .brand-logo {
-        width: 150px;
+      .logo {
+        gap: 8px;
+      }
+
+      .brand-mark {
+        width: 40px;
+        height: 40px;
+      }
+
+      .brand-wordmark {
+        gap: 4px;
+        font-size: 1.02rem;
       }
 
       main {
@@ -713,7 +742,10 @@
   <header class="topbar">
     <div class="container topbar-inner">
       <a class="logo" href="index.html" aria-label="artigianidel3d, home">
-        <img class="brand-logo" src="assets/logo-artigianidel3d.svg" alt="artigianidel3d">
+        <img class="brand-mark" src="assets/logo-mark.svg" alt="">
+        <span class="brand-wordmark" aria-hidden="true">
+          <span>artigiani</span><span class="brand-accent">del3d</span>
+        </span>
       </a>
       <div class="topbar-actions">
         <div class="session-tools" id="session-tools" hidden>
