@@ -805,7 +805,8 @@
 
     function orderOnWhatsApp(product) {
       const price = formatWhatsAppPrice(product.price);
-      const message = `Ciao! Vorrei ordinare il prodotto: ${product.title} (Prezzo: €${price})`;
+      const priceLabel = product.price_from ? `a partire da €${price}` : `€${price}`;
+      const message = `Ciao! Vorrei ordinare il prodotto: ${product.title} (Prezzo: ${priceLabel})`;
       const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
       window.open(whatsappUrl, "_blank", "noopener,noreferrer");
     }
@@ -846,7 +847,7 @@
 
       const price = document.createElement("span");
       price.className = "product-price";
-      price.textContent = formatPrice(product.price);
+      price.textContent = `${product.price_from ? "A partire da " : ""}${formatPrice(product.price)}`;
 
       const description = document.createElement("p");
       description.className = "product-description";
@@ -924,7 +925,7 @@
 
       const { data, error } = await supabaseClient
         .from("products")
-        .select("id,title,description,price,image_path,created_at")
+        .select("id,title,description,price,price_from,image_path,created_at")
         .order("created_at", { ascending: false });
 
       if (error) {

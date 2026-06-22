@@ -302,6 +302,88 @@
       box-shadow: 0 0 0 4px rgba(86, 136, 255, 0.12);
     }
 
+    .price-option {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 10px;
+      padding: 11px 12px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: rgba(5, 5, 8, 0.42);
+      cursor: pointer;
+      transition: border-color 180ms ease, background-color 180ms ease;
+    }
+
+    .price-option:hover {
+      border-color: rgba(199, 255, 74, 0.32);
+      background: rgba(199, 255, 74, 0.035);
+    }
+
+    .price-option input {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .price-switch {
+      position: relative;
+      flex: 0 0 auto;
+      width: 42px;
+      height: 24px;
+      border-radius: 999px;
+      background: #2a2931;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+      transition: background-color 180ms ease, box-shadow 180ms ease;
+    }
+
+    .price-switch::after {
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #aaa8b2;
+      content: "";
+      transition: background-color 180ms ease, transform 180ms ease;
+    }
+
+    .price-option input:checked + .price-switch {
+      background: rgba(199, 255, 74, 0.24);
+      box-shadow: inset 0 0 0 1px rgba(199, 255, 74, 0.4), 0 0 18px rgba(199, 255, 74, 0.08);
+    }
+
+    .price-option input:checked + .price-switch::after {
+      background: var(--lime);
+      transform: translateX(18px);
+    }
+
+    .price-option input:focus-visible + .price-switch {
+      outline: 3px solid rgba(199, 255, 74, 0.68);
+      outline-offset: 3px;
+    }
+
+    .price-option-copy {
+      display: grid;
+      gap: 2px;
+      min-width: 0;
+    }
+
+    .price-option-copy strong {
+      color: var(--text);
+      font-size: 0.78rem;
+    }
+
+    .price-option-copy small {
+      color: var(--muted);
+      font-size: 0.67rem;
+      font-weight: 500;
+      line-height: 1.35;
+    }
+
     .file-drop {
       position: relative;
       display: grid;
@@ -860,6 +942,14 @@
           <div class="field">
             <label for="product-price">Prezzo (€) <span class="required" aria-hidden="true">*</span></label>
             <input id="product-price" name="price" type="text" inputmode="decimal" placeholder="Es. 29,90" pattern="[0-9]+([,.][0-9]{1,2})?" title="Inserisci un prezzo valido, ad esempio 29,90" required>
+            <label class="price-option" for="price-from">
+              <input id="price-from" name="priceFrom" type="checkbox">
+              <span class="price-switch" aria-hidden="true"></span>
+              <span class="price-option-copy">
+                <strong>A partire da</strong>
+                <small>Mostra questa dicitura accanto al prezzo.</small>
+              </span>
+            </label>
           </div>
 
           <div class="field">
@@ -1108,7 +1198,7 @@
 
       const meta = document.createElement("p");
       meta.className = "product-meta";
-      meta.textContent = formatPrice(product.price);
+      meta.textContent = (product.price_from ? "A partire da " : "") + formatPrice(product.price);
 
       const description = document.createElement("p");
       description.className = "product-description";
@@ -1171,7 +1261,7 @@
 
       const { data, error } = await supabaseClient
         .from("products")
-        .select("id,title,description,price,image_path,created_at")
+        .select("id,title,description,price,price_from,image_path,created_at")
         .order("created_at", { ascending: false });
 
       if (error) {
@@ -1242,6 +1332,7 @@
           title: form.elements["title"].value.trim(),
           description: form.elements["description"].value.trim(),
           price: price,
+          price_from: form.elements["priceFrom"].checked,
           image_path: imagePath
         });
 

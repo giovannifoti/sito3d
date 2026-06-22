@@ -43,6 +43,11 @@ Puoi verificare i risultati in **Table Editor** e **Storage**. In
 **Database > Security Advisor** non dovrebbero comparire segnalazioni di RLS
 mancante per queste tabelle.
 
+Se il database era già stato creato con una versione precedente del progetto,
+esegui anche `supabase-migration-price-from.sql` nel SQL Editor. La migrazione
+aggiunge l'opzione “A partire da” senza modificare o eliminare i prodotti già
+presenti.
+
 ## 3. Crea il tuo account amministratore
 
 1. Apri **Authentication > Users**.

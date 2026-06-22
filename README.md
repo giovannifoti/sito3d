@@ -9,6 +9,7 @@ catalogo Supabase e pannello admin autenticato.
 - `admin.html` — login e gestione prodotti;
 - `assets/` — logo orizzontale, variante chiara, simbolo e avatar Instagram nei formati SVG e PNG;
 - `supabase-schema.sql` — database, Storage e policy RLS;
+- `supabase-migration-price-from.sql` — migrazione per la dicitura “A partire da”;
 - `scripts/build.mjs` — build Netlify e generazione della configurazione;
 - `netlify.toml` — comando di build e directory di pubblicazione;
 - `_headers` — header HTTP di sicurezza;

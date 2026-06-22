@@ -20,6 +20,7 @@ create table if not exists public.products (
   title text not null check (char_length(title) between 1 and 80),
   description text not null check (char_length(description) between 1 and 500),
   price numeric(10, 2) not null check (price >= 0),
+  price_from boolean not null default false,
   image_path text not null check (char_length(image_path) > 0),
   created_by uuid references auth.users(id) on delete set null default auth.uid(),
   created_at timestamptz not null default now(),
